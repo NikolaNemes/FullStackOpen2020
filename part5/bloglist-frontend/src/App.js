@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react'
-import { Blogs, BlogForm } from './components/Blog'
-import { Login, Logout } from './components/Login'
+import Blogs from './components/Blogs'
+import BlogForm from './components/BlogForm'
+import Login  from './components/Login'
+import Logout  from './components/Logout'
 import Togglable from './components/Toggleable'
 import Notification from './components/Notification'
 import blogService from './services/blogs'
@@ -19,9 +21,10 @@ const App = () => {
     try {
       const newBlog = await blogService.create(blog)
       setBlogs(blogs.concat(newBlog))
+      blogFormRef.current.toggleVisibility()
       displayMessage('Successfully added new blog', 'notify')
     } catch (e) {
-      if (e.response.data.error) {
+      if (e.response && e.response.data && e.response.data.error) {
         displayMessage(e.response.data.error, 'error')
       } else {
         displayMessage('something went wrong', 'error')
@@ -47,7 +50,7 @@ const App = () => {
         await blogService.remove(toDelete)
         setBlogs(blogs.filter((blog) => blog.id !== toDelete.id))
       } catch (e) {
-        if (e.response.data.error) {
+        if (e.response && e.response.data && e.response.data.error) {
           displayMessage(e.response.data.error, 'error')
         } else {
           displayMessage('something went wrong', 'error')

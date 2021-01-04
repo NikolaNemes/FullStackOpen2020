@@ -6,6 +6,7 @@ const Login = ({ handleLogin, setUsername, username, setPassword, password }) =>
       <div>
           username
         <input
+          id="inputUsername"
           type="text"
           value={username}
           name="Username"
@@ -15,21 +16,16 @@ const Login = ({ handleLogin, setUsername, username, setPassword, password }) =>
       <div>
           password
         <input
+          id="inputPassword"
           type="password"
           value={password}
           name="Password"
           onChange={({ target }) => setPassword(target.value)}
         />
       </div>
-      <button type="submit">login</button>
+      <button id="loginSubmit" type="submit">login</button>
     </form>
   )
 }
 
-const Logout = ({ user, handleLogout }) => {
-  return (
-    <p>{user.name} is logged in <button onClick={handleLogout}>log out</button></p>
-  )
-}
-
-export { Login, Logout }
+export default Login

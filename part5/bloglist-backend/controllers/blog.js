@@ -24,7 +24,7 @@ blogRouter.post('/', async (request, response) => {
   // eslint-disable-next-line no-underscore-dangle
   user.blogs = user.blogs.concat(savedBlog._id)
   await user.save()
-  return response.status(201).json(savedBlog)
+  return response.status(201).json(await Blog.findById(savedBlog.id).populate('user', { username: 1, name: 1 }))
 })
 
 blogRouter.delete('/:id', async (request, response) => {
